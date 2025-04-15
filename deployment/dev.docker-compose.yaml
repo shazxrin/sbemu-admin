@@ -1,0 +1,23 @@
+name: dev-sbemu-mgr-stack
+services:
+  sbemulator:
+    image: mcr.microsoft.com/azure-messaging/servicebus-emulator:latest
+    pull_policy: always
+    volumes:
+      - "${SERVICE_BUS_CONFIG_PATH}:/ServiceBus_Emulator/ConfigFiles/Config.json"
+    ports:
+      - "5672:5672"
+      - "5300:5300"
+    environment:
+      SQL_SERVER: sqledge
+      MSSQL_SA_PASSWORD: "${SERVICE_BUS_MSSQL_PASSWORD}"
+      ACCEPT_EULA: Y
+    depends_on:
+      - sqledge
+  sqledge:
+    image: "mcr.microsoft.com/azure-sql-edge:latest"
+    ports:
+      - "1433:1433"
+    environment:
+      ACCEPT_EULA: Y
+      SERVICE_BUS_MSSQL_PASSWORD: "${SERVICE_BUS_MSSQL_PASSWORD}"
