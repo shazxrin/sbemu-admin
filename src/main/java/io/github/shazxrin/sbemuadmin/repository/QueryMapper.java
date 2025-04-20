@@ -1,6 +1,7 @@
 package io.github.shazxrin.sbemuadmin.repository;
 
 import io.github.shazxrin.sbemuadmin.model.Entity;
+import io.github.shazxrin.sbemuadmin.model.EntityInfo;
 import io.github.shazxrin.sbemuadmin.model.EntityType;
 import io.github.shazxrin.sbemuadmin.model.Message;
 import java.nio.charset.StandardCharsets;
@@ -35,6 +36,16 @@ public class QueryMapper {
             new String(resultSet.getBytes("Body"), StandardCharsets.UTF_8),
             hasExpireDateTime ? resultSet.getTimestamp("ExpireDateTime").toLocalDateTime() : null,
             resultSet.getTimestamp("CreatedDateTime").toLocalDateTime()
+        );
+    }
+
+    public static EntityInfo mapToEntityInfo(ResultSet resultSet) throws SQLException {
+        return new EntityInfo(
+            EntityType.fromValue(resultSet.getInt("Type")),
+            resultSet.getString("Name"),
+            resultSet.getLong("MessageCount"),
+            resultSet.getLong("MaximumDeletedSequenceNumber"),
+            resultSet.getString("CreatedDateTime")
         );
     }
 }

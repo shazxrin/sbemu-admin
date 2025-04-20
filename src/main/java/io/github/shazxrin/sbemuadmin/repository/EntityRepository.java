@@ -1,6 +1,7 @@
 package io.github.shazxrin.sbemuadmin.repository;
 
 import io.github.shazxrin.sbemuadmin.model.Entity;
+import io.github.shazxrin.sbemuadmin.model.EntityInfo;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -16,6 +17,20 @@ public class EntityRepository {
             Query.ENTITY_LIST_ALL_QUERY,
             (resultSet, _) -> QueryMapper.mapToEntity(resultSet)
         );
+    }
+
+    public EntityInfo findEntityInfo(String entityGroupId, long entityId) {
+        List<EntityInfo> entityInfoList = jdbcTemplate.query(
+            Query.ENTITY_INFO_QUERY,
+            (resultSet, _) -> QueryMapper.mapToEntityInfo(resultSet),
+            entityGroupId, entityId
+        );
+
+        if (entityInfoList.isEmpty()) {
+            return null;
+        }
+
+        return entityInfoList.getFirst();
     }
 
     public boolean existsByEntityGroupIdAndEntityId(String entityGroupId, long entityId) {

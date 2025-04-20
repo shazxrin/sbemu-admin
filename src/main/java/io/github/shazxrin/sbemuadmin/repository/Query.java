@@ -14,6 +14,24 @@ public final class Query {
             ON e_lock.EntityGroupId = e_lookup.EntityGroupId
             AND e_lock.EntityId = e_lookup.Id
         """;
+    public static final String ENTITY_INFO_QUERY = """
+        SELECT
+            e_lookup.Type as Type,
+            e_lookup.Name as Name,
+            e_lookup.MessageCount as MessageCount,
+            l.MaximumDeletedSequenceNumber as MaximumDeletedSequenceNumber,
+            e_lookup.CreatedTime as CreatedDateTime
+        FROM EntityLockTable e_lock
+        JOIN EntityLookupTable e_lookup
+            ON e_lock.EntityGroupId = e_lookup.EntityGroupId
+            AND e_lock.EntityId = e_lookup.Id
+        JOIN LogsTable l
+             ON e_lock.EntityGroupId = l.EntityGroupId
+             AND e_lock.EntityId = l.EntityId
+        WHERE
+            e_lock.EntityGroupId = ? AND
+            e_lock.EntityId = ?
+        """;
     public static final String ENTITY_COUNT_QUERY = """
         SELECT
             COUNT(*) as Count
