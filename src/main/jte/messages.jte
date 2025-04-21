@@ -1,7 +1,10 @@
-@param io.github.shazxrin.sbemuadmin.model.EntityType entityType
-@param java.lang.String entityGroupId
-@param java.lang.Long entityId
-@param io.github.shazxrin.sbemuadmin.model.EntityInfo entityInfo
+@import io.github.shazxrin.sbemuadmin.model.EntityType
+@import io.github.shazxrin.sbemuadmin.model.EntityInfo
+
+@param EntityType entityType
+@param String entityGroupId
+@param Long entityId
+@param EntityInfo entityInfo
 
 @template.layout(
 content = @`

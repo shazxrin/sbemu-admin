@@ -2,13 +2,11 @@ spring:
   application:
     name: sbemu-admin
   datasource:
-    url: jdbc:sqlserver://localhost:1433;databaseName=SbMessageContainerDatabase00001;encrypt=false
     username: sa
-    password: Password123!
   jpa:
     hibernate:
       ddl-auto: none
 gg:
   jte:
-    development-mode: true
-    template-location: src/main/resources/templates
+    usePrecompiledTemplates: true
+    developmentMode: false

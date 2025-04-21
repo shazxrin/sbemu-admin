@@ -1,0 +1,33 @@
+name: sbemu-mgr-stack
+services:
+  sbemu-admin:
+    image: ghcr.io/shazxrin/sbemu-admin:latest
+    pull_policy: never
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:sqlserver://sqledge:1433;databaseName=SbMessageContainerDatabase00001;encrypt=false
+      SPRING_DATASOURCE_PASSWORD: "${SERVICE_BUS_MSSQL_PASSWORD}"
+    restart: always
+
+  sbemulator:
+    image: mcr.microsoft.com/azure-messaging/servicebus-emulator:latest
+    pull_policy: always
+    volumes:
+      - "${SERVICE_BUS_CONFIG_PATH}:/ServiceBus_Emulator/ConfigFiles/Config.json"
+    ports:
+      - "5672:5672"
+      - "5300:5300"
+    environment:
+      SQL_SERVER: sqledge
+      MSSQL_SA_PASSWORD: "${SERVICE_BUS_MSSQL_PASSWORD}"
+      ACCEPT_EULA: Y
+    depends_on:
+      - sqledge
+  sqledge:
+    image: "mcr.microsoft.com/azure-sql-edge:latest"
+    ports:
+      - "1433:1433"
+    environment:
+      ACCEPT_EULA: Y
+      MSSQL_SA_PASSWORD: "${SERVICE_BUS_MSSQL_PASSWORD}"

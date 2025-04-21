@@ -20,7 +20,7 @@ public class MessageRepository {
     ) {
         return jdbcTemplate.query(
             Query.MESSAGE_LIST_QUEUE_QUERY,
-            (resultSet, _) -> mapToMessage(resultSet),
+            (resultSet, rowNo) -> mapToMessage(resultSet),
             entityGroupId, entityId, startSequenceNumber, endSequenceNumber
         );
     }
@@ -33,7 +33,7 @@ public class MessageRepository {
     ) {
         return jdbcTemplate.query(
             Query.MESSAGE_LIST_TOPIC_QUERY,
-            (resultSet, _) -> mapToMessage(resultSet),
+            (resultSet, rowNo) -> mapToMessage(resultSet),
             entityGroupId, entityId, startSequenceNumber, endSequenceNumber
         );
     }
@@ -46,7 +46,7 @@ public class MessageRepository {
     ) {
         return jdbcTemplate.query(
             Query.MESSAGE_LIST_SUBSCRIPTION_QUERY,
-            (resultSet, _) -> mapToMessage(resultSet),
+            (resultSet, rowNo) -> mapToMessage(resultSet),
             entityGroupId, entityId, startSequenceNumber, endSequenceNumber
         );
     }

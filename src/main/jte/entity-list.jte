@@ -1,4 +1,7 @@
-@param java.util.List<io.github.shazxrin.sbemuadmin.model.Entity> entities
+@import java.util.List
+@import io.github.shazxrin.sbemuadmin.model.Entity
+
+@param List<Entity> entities
 
 <div class="flex flex-col space-y-1">
     @if(entities.isEmpty())

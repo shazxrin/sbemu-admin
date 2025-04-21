@@ -1,5 +1,8 @@
-@param java.lang.String requestDateTime
-@param java.util.List<io.github.shazxrin.sbemuadmin.model.Message> messages
+@import java.util.List
+@import io.github.shazxrin.sbemuadmin.model.Message
+
+@param String requestDateTime
+@param List<Message> messages
 
 <h2 class="font-bold text-2xl">Messages</h2>
 <h5 class="text-gray-500 mb-4">Updated on ${requestDateTime}</h5>

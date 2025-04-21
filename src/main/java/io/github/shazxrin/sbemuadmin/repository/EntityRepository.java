@@ -15,14 +15,14 @@ public class EntityRepository {
     public List<Entity> findAllEntities() {
         return jdbcTemplate.query(
             Query.ENTITY_LIST_ALL_QUERY,
-            (resultSet, _) -> QueryMapper.mapToEntity(resultSet)
+            (resultSet, rowNo) -> QueryMapper.mapToEntity(resultSet)
         );
     }
 
     public EntityInfo findEntityInfo(String entityGroupId, long entityId) {
         List<EntityInfo> entityInfoList = jdbcTemplate.query(
             Query.ENTITY_INFO_QUERY,
-            (resultSet, _) -> QueryMapper.mapToEntityInfo(resultSet),
+            (resultSet, rowNo) -> QueryMapper.mapToEntityInfo(resultSet),
             entityGroupId, entityId
         );
 
@@ -36,7 +36,7 @@ public class EntityRepository {
     public boolean existsByEntityGroupIdAndEntityId(String entityGroupId, long entityId) {
         List<Integer> count = jdbcTemplate.query(
             Query.ENTITY_COUNT_QUERY,
-            (resultSet, _) -> resultSet.getInt("Count"),
+            (resultSet, rowNo) -> resultSet.getInt("Count"),
             entityGroupId, entityId
         );
 
